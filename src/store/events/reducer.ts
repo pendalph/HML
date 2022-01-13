@@ -4,9 +4,9 @@ import { getEvents } from './actions/actions';
 import { IEventResponse } from './types';
 
 export type EventsState = {
-    items: Array<IEventResponse>;
-    isLoading: boolean;
-    isError: boolean;
+    items: Array<IEventResponse>,
+    isLoading: boolean,
+    isError: boolean,
 };
 
 export const initialState: EventsState = {
@@ -28,12 +28,14 @@ export const eventSlice = createSlice({
 
       state.items = [...payload]
       state.isLoading = false;
+      state.isError = false;
     });
     builder.addCase(getEvents.rejected, state => {
       state.isLoading = false;
+      state.isError = true;
     });
   }
-})
+});
 
 export const eventsSelector = (state: RootState) => state.events;
 

@@ -22,8 +22,9 @@ export const AppNavigator = (): JSX.Element => {
           name="EventsDetailScreen"
           component={EventsDetailScreen}
           options={{
-            headerShown: false,
             ...TransitionPresets.SlideFromRightIOS,
+            title: '',
+            headerBackTitle: ''
           }}
         />
       </Stack.Navigator>
