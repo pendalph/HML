@@ -1,16 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
-import { DateTime } from 'luxon';
 import React from 'react';
 import { Linking, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Image } from '_app/components';
 import { ProfileScreenNavigationProp } from '_app/screens/HomeScreen/types';
 import { IEventResponse } from '_app/store/events/types';
+import { getTimeAgo } from '_app/utils';
 import { events } from './mock';
 import { styles } from './styles';
 
 export const EventItem: React.FC<IEventResponse> = ({ actor, type, created_at, repo }): JSX.Element => {
-  const timeAgo = DateTime.fromISO(created_at).toRelative();
+  const timeAgo = getTimeAgo(created_at);
   const eventsTypeText = events[type];
 
   const navigation = useNavigation<ProfileScreenNavigationProp>();
