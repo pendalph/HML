@@ -1,7 +1,12 @@
 module.exports = {
-  bracketSpacing: false,
-  jsxBracketSameLine: true,
+  tabWidth: 2,
+  printWidth: 120,
   singleQuote: true,
-  trailingComma: 'all',
   arrowParens: 'avoid',
+  trailingComma: 'es5',
+  bracketSpacing: true,
+  jsxBracketSameLine: false,
+  importOrder: ['_', '^[./]'],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true
 };
