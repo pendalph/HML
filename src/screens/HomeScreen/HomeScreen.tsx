@@ -1,12 +1,15 @@
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Error } from '_app/components';
 import { EventItem } from '_app/components/EventItem/EventItem';
 import { getEvents } from '_app/store/events/actions/actions';
 import { eventsSelector } from '_app/store/events/reducer';
+
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+
 import { styles } from './styles';
 
 export const HomeScreen: React.FC = (): JSX.Element => {
@@ -37,7 +40,7 @@ export const HomeScreen: React.FC = (): JSX.Element => {
         }, 15000);
         return () => clearTimeout(timeoutId);
       }
-    }, [isRefreshing, isScrolling]),
+    }, [isRefreshing, isScrolling])
   );
 
   const fetchEvents = () => {
@@ -45,10 +48,10 @@ export const HomeScreen: React.FC = (): JSX.Element => {
     setIsRefreshing(false);
   };
 
-  const keyExtractor = useCallback((item) => item.id.toString(), []);
+  const keyExtractor = useCallback(item => item.id.toString(), []);
 
   if (isError) {
-    return <Error title='Произошла ошибка' description='попробуйте еще раз' action={fetchEvents}/>
+    return <Error title="Произошла ошибка" description="Попробуйте еще раз" action={fetchEvents} />;
   }
 
   return (
@@ -58,21 +61,20 @@ export const HomeScreen: React.FC = (): JSX.Element => {
         refreshControl={
           <RefreshControl
             refreshing={isLoading}
-            onRefresh={!isLoading ? () => fetchEvents() : undefined}
+            enabled={!isRefreshing} // props work only in android devices
+            onRefresh={isRefreshing ? () => fetchEvents() : undefined}
           />
         }
         renderItem={({ item }) => <EventItem {...item} />}
-        onScroll={event => setIsScrolling(!event ? false : true)}
+        onScrollBeginDrag={() => setIsScrolling(true)}
+        onScrollEndDrag={() => setIsScrolling(false)}
         keyExtractor={keyExtractor}
-        ListEmptyComponent={() => 
-          <Error
-            title='Ой, мы что то напутали'
-            description='кажется данных еще нет, потяните вниз'
-          />
-        }
-        maxToRenderPerBatch={5}
-        initialNumToRender={5}
+        ListEmptyComponent={() => (
+          <Error title="Похоже что данных еще нет" description="подождите немного а потом потяните вниз" />
+        )}
+        maxToRenderPerBatch={10}
+        initialNumToRender={10}
       />
     </View>
-  )
-}
+  );
+};

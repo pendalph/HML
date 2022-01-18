@@ -6,7 +6,8 @@ module.exports = {
   trailingComma: 'es5',
   bracketSpacing: true,
   jsxBracketSameLine: false,
-  importOrder: ['_', '^[./]'],
+  // importOrder: ['_', '^[./]'],
+  importOrder: ['_', '^_app/(.*)$', '^@react-navigation/(.*)$', '^@reduxjs/(.*)$', '^[./]', '^[../]'],
   importOrderSeparation: true,
-  importOrderSortSpecifiers: true
+  importOrderSortSpecifiers: true,
 };

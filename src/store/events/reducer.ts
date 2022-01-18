@@ -23,7 +23,7 @@ export const eventSlice = createSlice({
     builder.addCase(getEvents.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getEvents.fulfilled, (state: EventsState, action: PayloadAction<IEventResponse[]>) => {
+    builder.addCase(getEvents.fulfilled, (state: EventsState, action: PayloadAction<Array<IEventResponse>>) => {
       const { payload } = action;
 
       state.items = [...payload]

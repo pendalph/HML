@@ -1,11 +1,14 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Linking, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import { Image } from '_app/components';
 import { ProfileScreenNavigationProp } from '_app/screens/HomeScreen/types';
 import { IEventResponse } from '_app/store/events/types';
 import { getTimeAgo } from '_app/utils';
+
+import { useNavigation } from '@react-navigation/native';
+
 import { events } from './mock';
 import { styles } from './styles';
 
@@ -16,21 +19,23 @@ export const EventItem: React.FC<IEventResponse> = ({ actor, type, created_at, r
   const navigation = useNavigation<ProfileScreenNavigationProp>();
 
   const openLink = (url: string): void => {
-    Linking.openURL(url)
-  }
+    Linking.openURL(url);
+  };
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('EventsDetailScreen', {
-        actor: actor,
-        type: type,
-        created_at: created_at,
-        repo: repo
-      })}
+      onPress={() =>
+        navigation.navigate('EventsDetailScreen', {
+          actor: actor,
+          type: type,
+          created_at: created_at,
+          repo: repo,
+        })
+      }
       style={styles.listItem}
     >
       <View style={styles.avatarContainer}>
-        <Image styles={styles.userAvatar} uri={actor.avatar_url}/>
+        <Image styles={styles.userAvatar} uri={actor.avatar_url} />
       </View>
       <View style={styles.textContainer}>
         <View style={styles.topContainer}>
@@ -45,5 +50,5 @@ export const EventItem: React.FC<IEventResponse> = ({ actor, type, created_at, r
         </View>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};

@@ -40,8 +40,8 @@ class Http {
     return this.http.request(config);
   }
 
-  get<T = any, R = AxiosResponse<T>>(config?: AxiosRequestConfig): Promise<R> {
-    return this.http.get<T, R>('', config);
+  get<T = any, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): Promise<R> {
+    return this.http.get<T, R>(url, config);
   }
 
   private handleError(error: { status: any }) {
